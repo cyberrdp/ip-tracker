@@ -21,7 +21,8 @@ def get_geolocation(ip):
 
 @app.route("/")
 def index():
-    ip = request.remote_addr
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0]
+
     data = get_geolocation(ip)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
